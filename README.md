@@ -5,7 +5,7 @@
 
 Package for preloading website URLS from a provided SITEMAP URL.
 You can use this package to preload your website URLS in the background, so that your website will be faster for your users.
-You can set the depth in case It has more than one level.
+You can set the depth in case the sitemap has more than one level.
 
 ## Requirements :clipboard:
 * Python 3.6+
@@ -15,7 +15,7 @@ You can set the depth in case It has more than one level.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install preloader.
 
 ```
-    pip install .
+    pip install sitemap-preloader
 ```
 
 ## How to use :question:
