@@ -6,7 +6,7 @@ class Preloader:
     """
     Preloader class to fetch all URLs from a sitemap and its sitemap index"""
 
-    def __init__(self, sitemap_url, depth=2, page_start=1):
+    def __init__(self, sitemap_url, depth=2):
         """
         :param sitemap_url: URL of the sitemap
         :param depth: Depth of the sitemap index
@@ -14,35 +14,41 @@ class Preloader:
         self.sitemap_url = sitemap_url
         self.sitemap_urls = set()
         self.page_urls = set()
-        self.failed_urls = set()
-        if page_start < 1:
-            raise ValueError("page_start must be greater than 1")
-        self.page_start = page_start
+        self.failed_urls = {}
+        self.finished_pages = []
+        self.original_pages = set()
         if depth < 1:
             raise ValueError("depth must be greater than 1")
         self.depth = depth
-        self.fetch()
+        self.extract_urls()
 
-    def fetch(self):
+    def extract_urls(self):
         """
-        Fetches all URLs from the sitemap and its sitemap index
+        Extracts all URLs from the sitemap and store them in a set
         """
         self.fetch_url(self.sitemap_url)
         print(f"Found {len(self.sitemap_urls)} sitemaps")
-        # Fetch pages from sitemaps
-        self.fetch_all_pages()
+        print(f"Found {len(self.page_urls)} pages")
+        self.original_pages = self.page_urls.copy()
 
-    def fetch_all_pages(self):
+    def fetch_pages(self, batch_size=None):
         """
-        Fetches all URLs from the sitemap index
+        Fetches extracted urls
         """
-        total_pages = len(self.page_urls) - self.page_start
-        count_pages = self.page_start
-        print(f"Will process {total_pages} pages")
+        total_pages = len(self.page_urls)
+        fetched_pages = 0
+
+        print(
+            f"Will process {batch_size if batch_size else total_pages} pages of {total_pages}"
+        )
+
         page_urls = list(self.page_urls)
-        for url in page_urls[self.page_start :]:
-            print(f"Fetching page: {count_pages + 1}/{total_pages}")
-            count_pages += 1
+        pages_range = page_urls[:batch_size] if batch_size else page_urls
+        for url in pages_range:
+            fetched_pages += 1
+            print(
+                f"Fetching page: {fetched_pages}/{batch_size if batch_size else total_pages}"
+            )
             self.fetch_url(url, self.depth)
 
     def fetch_url(self, sitemap_url, level=0):
@@ -67,9 +73,21 @@ class Preloader:
                 elif level == self.depth - 1:
                     for url in urls:
                         self.add_url(self.page_urls, url)
+            else:
+                self.finished_pages.append(sitemap_url)
+                self.page_urls.remove(sitemap_url)
 
         else:
             print(f"Failed to fetch URL: {response.status_code}")
+            if response.status_code in self.failed_urls:
+                self.failed_urls[response.status_code].append(sitemap_url)
+            else:
+                self.failed_urls[response.status_code] = [sitemap_url]
+
+            if level == self.depth:
+                self.page_urls.remove(sitemap_url)
+            else:
+                self.sitemap_urls.remove(sitemap_url)
 
     def add_url(self, base_set, url):
         """

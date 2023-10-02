@@ -81,5 +81,23 @@ def test_preloader_level_3(mock_requests_get):
     assert len(preloader.page_urls) == 0
     assert len(preloader.sitemap_urls) == 8
 
+def test_fetch_all_pages(mock_requests_get):
+    preloader = Preloader("https://example.com/sitemap.xml", depth=2)
+    assert len(preloader.page_urls) == 6
+    preloader.fetch_pages()
+    assert len(preloader.finished_pages) == 6
+    assert len(preloader.page_urls) == 0
+    assert len(preloader.sitemap_urls) == 2
+
+def test_fetch_pages_batch(mock_requests_get):
+    preloader = Preloader("https://example.com/sitemap.xml", depth=2)
+    assert len(preloader.page_urls) == 6
+    preloader.fetch_pages(3)
+    assert len(preloader.finished_pages) == 3
+    assert len(preloader.page_urls) == 3
+    preloader.fetch_pages(3)
+    assert len(preloader.finished_pages) == 6
+    assert len(preloader.page_urls) == 0
+
 if __name__ == "__main__":
     pytest.main()
