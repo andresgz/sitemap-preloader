@@ -2,13 +2,16 @@
 
 [![py.test](https://github.com/andresgz/sitemap-preloader/actions/workflows/python.yml/badge.svg)](https://github.com/andresgz/sitemap-preloader/actions/workflows/python.yml)
 [![codecov](https://codecov.io/gh/andresgz/sitemap-preloader/graph/badge.svg?token=LI47UU6BUA)](https://codecov.io/gh/andresgz/sitemap-preloader)
+[![PyPI version](https://badge.fury.io/py/sitemap-preloader.svg)](https://badge.fury.io/py/sitemap-preloader)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sitemap-preloader)](https://pypi.org/project/sitemap-preloader/)
+[![PyPI - License](https://img.shields.io/pypi/l/sitemap-preloader)](https://pypi.org/project/sitemap-preloader/)
 
 Package for preloading website URLS from a provided SITEMAP URL.
 You can use this package to preload your website URLS in the background, so that your website will be faster for your users.
 You can set the depth in case the sitemap has more than one level.
 
 ## Requirements :clipboard:
-* Python 3.6+
+* Python 3.8+
 
 ## Installation :wrench:
 
