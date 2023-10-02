@@ -10,6 +10,8 @@ bs4 = "*"
 lxml = "*"
 validators = "*"
 pytest = "*"
+coverage = "*"
+black = "*"
 
 [dev-packages]
 
