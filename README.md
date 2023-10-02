@@ -1,8 +1,7 @@
 # Website SiteMap Preloader :rocket:
 
 [![py.test](https://github.com/andresgz/sitemap-preloader/actions/workflows/python.yml/badge.svg)](https://github.com/andresgz/sitemap-preloader/actions/workflows/python.yml)
-*Coverage*
-[![codecov](https://codecov.io/gh/andresgz/sitemap-preloader/branch/main/graph/badge.svg?token=ZQZQZQZQZQ)](https://codecov.io/gh/andresgz/sitemap-preloader)
+[![codecov](https://codecov.io/gh/andresgz/sitemap-preloader/graph/badge.svg?token=LI47UU6BUA)](https://codecov.io/gh/andresgz/sitemap-preloader)
 
 Package for preloading website URLS from a provided SITEMAP URL.
 You can use this package to preload your website URLS in the background, so that your website will be faster for your users.
