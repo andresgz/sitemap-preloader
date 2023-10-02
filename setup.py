@@ -18,7 +18,7 @@ install_requires = [
     "requests",  # Example dependency
     "beautifulsoup4",
     "validators",
-    "lxml"
+    "lxml",
 ]
 
 

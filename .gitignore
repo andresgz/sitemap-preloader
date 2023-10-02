@@ -17,6 +17,7 @@ env/
 # Log files and directories
 logs/
 *.log
+.coverage
 
 # Compiled Python files (use different patterns depending on your setup)
 *.pyc
