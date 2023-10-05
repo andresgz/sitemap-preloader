@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 # Package metadata
 name = "sitemap-preloader"
-version = "0.1.2"
+version = "0.1.3"
 description = "This package is used to read a sitemap and fetch all the urls in order to warm the cache of a website"
 author = "Andres Gonzalez"
 author_email = "code@andresgz.com"

@@ -6,7 +6,7 @@ class Preloader:
     """
     Preloader class to fetch all URLs from a sitemap and its sitemap index"""
 
-    def __init__(self, sitemap_url, depth=2):
+    def __init__(self, sitemap_url, depth=2, allow_redirects=False):
         """
         :param sitemap_url: URL of the sitemap
         :param depth: Depth of the sitemap index
@@ -17,6 +17,7 @@ class Preloader:
         self.failed_urls = {}
         self.finished_pages = []
         self.original_pages = set()
+        self.allow_redirects = allow_redirects
         if depth < 1:
             raise ValueError("depth must be greater than 1")
         self.depth = depth
@@ -58,7 +59,7 @@ class Preloader:
         :param level: Level of the sitemap index
         """
         print(f"Fetching: {sitemap_url}")
-        response = requests.get(sitemap_url)
+        response = requests.get(sitemap_url, allow_redirects=self.allow_redirects)
         urls = []
         if response.status_code == 200:
             # Don't analyze it if It's the latest level
