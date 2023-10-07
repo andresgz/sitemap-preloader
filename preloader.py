@@ -1,4 +1,4 @@
-import requests, validators
+import requests, validators, json
 from bs4 import BeautifulSoup
 from typing import Set, Dict, Any, List
 
@@ -101,3 +101,22 @@ class Preloader:
         """
         if validators.url(url):
             base_set.add(url)
+
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Returns a serializable option of the object
+        """
+        return {
+            "sitemap_url": self.sitemap_url,
+            "sitemap_urls": list(self.sitemap_urls),
+            "page_urls": list(self.page_urls),
+            "failed_urls": self.failed_urls,
+            "finished_pages": self.finished_pages,
+            "original_pages": list(self.original_pages),
+        }
+
+    def json(self) -> str:
+        """
+        Returns a JSON string of the object
+        """
+        return json.dumps(self.to_dict())
