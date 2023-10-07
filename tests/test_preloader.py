@@ -1,6 +1,7 @@
 import sys
 import os
-from typing import Generator, Any
+import json
+from typing import Generator, Any, Dict, List
 
 # Add the project's root directory to the Python path
 project_root = os.path.dirname(os.path.dirname(__file__))
@@ -153,6 +154,35 @@ def test_fetch_sitemap_with_error_page(
     assert len(preloader.page_urls) == 3
     preloader.fetch_pages()
     assert len(preloader.failed_urls[404]) == 3
+
+
+def test_serialize(mock_requests_get: Generator[Any, None, None]) -> None:
+    """
+    Test that the preloader can serialize the results
+    """
+    preloader = Preloader("https://example.com/sitemap.xml", depth=2)
+    preloader.fetch_pages()
+    serialized: Dict[str, Any] = preloader.to_dict()
+    assert serialized["sitemap_url"] == "https://example.com/sitemap.xml"
+    assert len(serialized["page_urls"]) == 0
+    assert len(serialized["sitemap_urls"]) == 2
+    assert len(serialized["failed_urls"]) == 0
+    assert len(serialized["finished_pages"]) == 6
+
+
+def test_json(mock_requests_get: Generator[Any, None, None]) -> None:
+    """
+    Test that the preloader can serialize the results
+    """
+    preloader = Preloader("https://example.com/sitemap.xml", depth=2)
+    preloader.fetch_pages()
+    preloader_json: str = preloader.json()
+    preloader_dict: Dict[str, Any] = json.loads(preloader_json)
+    assert preloader_dict["sitemap_url"] == "https://example.com/sitemap.xml"
+    assert len(preloader_dict["page_urls"]) == 0
+    assert len(preloader_dict["sitemap_urls"]) == 2
+    assert len(preloader_dict["failed_urls"]) == 0
+    assert len(preloader_dict["finished_pages"]) == 6
 
 
 if __name__ == "__main__":
