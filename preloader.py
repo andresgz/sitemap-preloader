@@ -1,29 +1,32 @@
 import requests, validators
 from bs4 import BeautifulSoup
+from typing import Set, Dict, Any, List
 
 
 class Preloader:
     """
     Preloader class to fetch all URLs from a sitemap and its sitemap index"""
 
-    def __init__(self, sitemap_url, depth=2, allow_redirects=False):
+    def __init__(
+        self, sitemap_url: str, depth: int = 2, allow_redirects: bool = False
+    ) -> None:
         """
         :param sitemap_url: URL of the sitemap
         :param depth: Depth of the sitemap index
         """
-        self.sitemap_url = sitemap_url
-        self.sitemap_urls = set()
-        self.page_urls = set()
-        self.failed_urls = {}
-        self.finished_pages = []
-        self.original_pages = set()
-        self.allow_redirects = allow_redirects
+        self.sitemap_url: str = sitemap_url
+        self.sitemap_urls: Set[str] = set()
+        self.page_urls: Set[str] = set()
+        self.failed_urls: Dict[int, List[str]] = {}
+        self.finished_pages: List[str] = []
+        self.original_pages: Set[str] = set()
+        self.allow_redirects: bool = allow_redirects
         if depth < 1:
             raise ValueError("depth must be greater than 1")
         self.depth = depth
         self.extract_urls()
 
-    def extract_urls(self):
+    def extract_urls(self) -> None:
         """
         Extracts all URLs from the sitemap and store them in a set
         """
@@ -32,7 +35,7 @@ class Preloader:
         print(f"Found {len(self.page_urls)} pages")
         self.original_pages = self.page_urls.copy()
 
-    def fetch_pages(self, batch_size=None):
+    def fetch_pages(self, batch_size: Any = None) -> None:
         """
         Fetches extracted urls
         """
@@ -52,7 +55,7 @@ class Preloader:
             )
             self.fetch_url(url, self.depth)
 
-    def fetch_url(self, sitemap_url, level=0):
+    def fetch_url(self, sitemap_url: str, level: int = 0) -> None:
         """
         Fetches all URLs from a sitemap or sitemap index
         :param sitemap_url: URL of the sitemap or sitemap index
@@ -90,7 +93,7 @@ class Preloader:
             else:
                 self.sitemap_urls.remove(sitemap_url)
 
-    def add_url(self, base_set, url):
+    def add_url(self, base_set: Set[str], url: str) -> None:
         """
         Adds a URL to the provided set if it's valid only
         :param base_set: Set to add the URL to

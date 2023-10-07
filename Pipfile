@@ -5,15 +5,19 @@ name = "pypi"
 
 [packages]
 requests = "*"
-requests-cache = "*"
 bs4 = "*"
 lxml = "*"
 validators = "*"
+types-requests = "*"
+types-beautifulsoup4 = "*"
+black = "*"
+mypy = "*"
+
+[dev-packages]
 pytest = "*"
 coverage = "*"
 black = "*"
-
-[dev-packages]
+mypy = "*"
 
 [requires]
 python_version = "3.11"
