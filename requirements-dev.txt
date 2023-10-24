@@ -1,5 +1,5 @@
 -i https://pypi.org/simple
-black==23.10.0; python_version >= '3.8'
+black==23.10.1; python_version >= '3.8'
 click==8.1.7; python_version >= '3.7'
 coverage==7.3.2; python_version >= '3.8'
 iniconfig==2.0.0; python_version >= '3.7'
